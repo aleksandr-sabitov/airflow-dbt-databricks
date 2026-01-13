@@ -1,0 +1,77 @@
+
+version: 2
+
+sources:
+  - name: wanderbricks
+    database: samples
+    schema: wanderbricks
+    tables:
+      - name: users
+      - name: bookings
+      - name: properties
+
+models:
+  - name: stg_users
+    description: Staging model for users
+    columns:
+      - name: user_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: email
+      - name: name
+      - name: country
+      - name: user_type
+      - name: created_at
+      - name: is_business
+      - name: company_name
+
+  - name: stg_bookings
+    description: Staging model for bookings
+    columns:
+      - name: booking_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: property_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_properties')
+              field: property_id
+      - name: check_in
+      - name: check_out
+      - name: guests_count
+      - name: total_amount
+      - name: status
+      - name: created_at
+      - name: updated_at
+
+  - name: stg_properties
+    description: Staging model for properties
+    columns:
+      - name: property_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: host_id
+      - name: destination_id
+      - name: title
+      - name: description
+      - name: base_price
+      - name: property_type
+      - name: max_guests
+      - name: bedrooms
+      - name: bathrooms
+      - name: property_latitude
+      - name: property_longitude
+      - name: created_at

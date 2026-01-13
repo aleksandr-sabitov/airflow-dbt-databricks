@@ -1,0 +1,25 @@
+
+version: 2
+
+models:
+  - name: dm_monthly_bookings
+    description: Aggregated monthly bookings with property details and user metrics
+    columns:
+      - name: booking_month
+        description: Month of the booking
+      - name: property_title
+        description: Title of the property
+      - name: property_type
+        description: Type of the property
+      - name: unique_users
+        description: Number of unique users who made bookings
+      - name: total_bookings
+        description: Total number of bookings
+      - name: total_revenue
+        description: Total revenue from bookings
+      - name: avg_booking_amount
+        description: Average booking amount
+      - name: min_booking_amount
+        description: Minimum booking amount
+      - name: max_booking_amount
+        description: Maximum booking amount
