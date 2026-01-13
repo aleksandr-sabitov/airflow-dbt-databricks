@@ -61,8 +61,26 @@ models:
               field: property_id
       - name: check_in
       - name: check_out
-      - name: guests_count
       - name: total_amount
       - name: status
       - name: created_at
       - name: updated_at
+
+  - name: fct_payments
+    description: Fact table for payments
+    columns:
+      - name: payment_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: booking_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('fct_bookings')
+              field: booking_id
+      - name: amount
+      - name: payment_method
+      - name: status
+      - name: payment_date

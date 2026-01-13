@@ -9,7 +9,6 @@ select
     property_id,
     check_in,
     check_out,
-    guests_count,
     total_amount,
     status,
     created_at,

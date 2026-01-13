@@ -71,6 +71,12 @@ with DAG(
         env=os.environ.copy()
     )
 
+    dbt_run_payments = BashOperator(
+        task_id='dbt_run_payments',
+        bash_command="cd /opt/airflow/dbt && /opt/airflow/python3-virtualenv/dbt-env/bin/dbt run --select +fct_payments+",
+        env=os.environ.copy()
+    )
+
     stop_warehouse = PythonOperator(
         task_id='stop_warehouse',
         python_callable=stop_sql_warehouse,
@@ -82,4 +88,7 @@ with DAG(
         op_kwargs={'task_name': 'dag_end'},
     )
 
-    dag_start >> dbt_run_datamarts >> stop_warehouse >> dag_end
+    # Define dependencies
+    dag_start >> dbt_run_datamarts >> stop_warehouse
+    dag_start >> dbt_run_payments
+    [stop_warehouse, dbt_run_payments] >> dag_end
